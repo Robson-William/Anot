@@ -1,5 +1,5 @@
 // Importando módulos
-import {client} from "../db/mongo.js";
+import {client} from "../db/mongo.mjs";
 import * as dotenv from "dotenv";
 
 // Configurações

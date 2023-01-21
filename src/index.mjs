@@ -1,7 +1,7 @@
 // Importando módulos
 import express from 'express';
 import * as dotenv from 'dotenv';
-import router from './routes/index.js';
+import router from './routes/index.mjs';
 
 // Configurações
 dotenv.config();

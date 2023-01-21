@@ -2,11 +2,10 @@
   "name": "anot",
   "version": "1.0.0",
   "description": "Aplicativo de anotações pessoais.",
-  "main": "index.js",
-  "type": "module",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.mjs"
   },
   "repository": {
     "type": "git",

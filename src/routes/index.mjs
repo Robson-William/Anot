@@ -1,6 +1,6 @@
 // Importando módulos
 import express from "express";
-import {add, list, busca} from "../controllers/anotacaoController.js";
+import {add, list, busca} from "../controllers/anotacaoController.mjs";
 
 // Configurações
 const router = express.Router();
