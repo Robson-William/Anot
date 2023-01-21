@@ -9,4 +9,4 @@ dotenv.config();
 const client = new MongoClient(process.env.MONGO);
 
 // Exportar módulo
-export client;
+export {client};

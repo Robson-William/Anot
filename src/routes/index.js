@@ -1,24 +1,19 @@
 // Importando módulos
-import express from 'express';
+import express from "express";
+import {add, list, busca} from "../controllers/anotacaoController.js";
 
 // Configurações
 const router = express.Router();
 
 // Rotas
 	// Rota principal
-	router.get('/', (req, res) => {
-		res.send('OLá Mundo!');
-	})
+	router.get('/', list);
 
 	// Rota para requisitar notas
-	router.get('/adicionar', (req, res) => {
-		res.send('Adicionar notas');
-	})
+	router.get('/busca', busca);
 
 	// Rota para adicionar notas
-	router.post('/adicionar', (req, res) => {
-		
-	})
+	router.post('/add', add);
 
 // Exportar módulo
 export default router;

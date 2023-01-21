@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 
 app.use(express.static('public'));
-app.use(express.JSON());
+app.use(express.json());
 app.use(router);
 
 // Executar api
