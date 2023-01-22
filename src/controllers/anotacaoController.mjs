@@ -59,7 +59,6 @@ dotenv.config();
 			const filtro = await collection.find({$text: {$search: pesquisa}}).toArray();
 			res.status(200).json(filtro);
 		}catch(e) {
-			console.log(e.message, e.code);
 			res.status(400).send("Falha ao buscar!");
 		}finally {
 			client.close();
@@ -67,4 +66,46 @@ dotenv.config();
 
 	}
 
-export {add, list, busca};
+	// Atualizar
+	const update = async (req, res) => {
+		const {pesquisa, atualizado} = req.body;
+
+		try{
+			// Configurações
+			await client.connect();
+			const db = client.db(process.env.DBNAME);
+			const collection = db.collection(process.env.DBCOLLECTION);
+
+			// Função
+			const filtro = await collection.updateOne({titulo: pesquisa}, {$set: {titulo: atualizado}});
+			res.status(200).json(atualizado);
+		}catch {
+			res.status(400).send("Erro ao atualizar");
+		}finally{
+			client.close();
+		}
+	}
+
+	// Deletar
+	const deletar = async (req, res) => {
+		const {pesquisa} = req.body;
+
+		try{
+			// Configurações
+			await client.connect();
+			const db = client.db(process.env.DBNAME);
+			const collection = db.collection(process.env.DBCOLLECTION);
+
+			// Função
+			const filtro = await collection.deleteMany({titulo: pesquisa});
+			res.status(200).send("Deletado!");
+		}catch {
+			res.status(400).send("Erro ao deletar!");
+		}finally{
+			client.close();
+		}
+	}
+
+
+
+export {add, list, busca, update, deletar};
