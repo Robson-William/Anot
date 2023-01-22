@@ -1,5 +1,4 @@
 // Importando módulos
-import {client} from "../db/mongo.mjs";
 import * as dotenv from "dotenv";
 import * as Anotacao from '../models/Anotacao.mjs';
 
@@ -7,7 +6,16 @@ import * as Anotacao from '../models/Anotacao.mjs';
 dotenv.config();
 
 // Rotas
+// Front
+	const index = async (req, res) => {
+		const anotacoes = await Anotacao.readAll();
 
+		res.render('anotacoes/index.html', {anotacoes});
+	}
+
+	const addForm = async (req, res) => {
+		res.render('anotacoes/form.html');
+	}
 
 // CRUD
 	// Adicionar anotação
@@ -56,5 +64,4 @@ dotenv.config();
 	}
 
 
-
-export {add, list, busca, update, deletar};
+export {add, list, busca, update, deletar, index, addForm};

@@ -1,25 +1,21 @@
 // Importando módulos
 import express from "express";
-import {add, list, busca, update, deletar} from "../controllers/anotacaoController.mjs";
+import * as Rota from "../controllers/anotacaoController.mjs";
 
 // Configurações
 const router = express.Router();
 
 // Rotas
-	// Rota principal
-	router.get("/", list);
+	// Rotas backend
+	router.get("/readAll", Rota.list);
+	router.get("/readOne", Rota.busca);
+	router.post("/create", Rota.add);
+	router.put("/update", Rota.update);
+	router.delete("/delete", Rota.deletar);
 
-	// Rota para requisitar notas
-	router.get("/busca", busca);
-
-	// Rota para adicionar notas
-	router.post("/add", add);
-
-	//Rota para atualizar notas
-	router.put("/update", update);
-
-	// Rota para deletar notas
-	router.delete("/delete", deletar);
+	// Rotas frontend
+	router.get('/', Rota.index);
+	router.get('/add', Rota.addForm);
 
 // Exportar módulo
 export default router;
