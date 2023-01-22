@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 
-<html>
+<html ln="pt-br">
 	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="javascript/card.js"></script>
 		<title>{{ title }}</title>
 	</head>
 
 	<body>
-		<h1>Olá mundo!</h1>
+		{% include "_menu.html" %}
+		
+		{% block content %}
+		{% endblock %}
 	</body>
 </html>
