@@ -13,10 +13,10 @@ import * as dotenv from 'dotenv';
 			const collection = await db.collection(process.env.DBCOLLECTION);
 
 			// Inserir
-			const inserirResultado = await collection.insertOne([{dados}]);
+			const inserirResultado = await collection.insertOne({titulo: dados.titulo, conteudo: dados.conteudo});
 			return inserirResultado;
-		}catch {
-			console.log("Falha ao salvar!");
+		}catch(err) {
+			console.log(err);
 		}finally {
 			client.close();
 		}
@@ -33,8 +33,8 @@ import * as dotenv from 'dotenv';
 			// Função
 			const buscarTodos = await collection.find({}).toArray();
 			return buscarTodos;
-		}catch {
-			console.log("Falha ao buscar!");
+		}catch(err) {
+			console.log(err);
 		}finally {
 			client.close();
 		}
@@ -51,8 +51,8 @@ import * as dotenv from 'dotenv';
 			// Função
 			const filtro = await collection.find({$text: {$search: pesquisa}}).toArray();
 			return filtro;
-		}catch(e) {
-			console.log("Falha ao buscar!");
+		}catch(err) {
+			console.log(err);
 		}finally {
 			client.close();
 		}
@@ -69,8 +69,8 @@ import * as dotenv from 'dotenv';
 			// Função
 			const filtro = await collection.updateOne({titulo: pesquisa}, {$set: {titulo: atualizado}});
 			return filtro;
-		}catch {
-			console.log("Erro ao atualizar");
+		}catch(err) {
+			console.log(err);
 		}finally{
 			client.close();
 		}
@@ -87,8 +87,8 @@ import * as dotenv from 'dotenv';
 			// Função
 			const filtro = await collection.deleteMany({titulo: pesquisa});
 			return 'Deletado!'
-		}catch {
-			console.log("Erro ao deletar!");
+		}catch(err) {
+			console.log(err);
 		}finally{
 			client.close();
 		}

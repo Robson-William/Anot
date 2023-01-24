@@ -21,12 +21,12 @@ dotenv.config();
 	// Adicionar anotação
 	const add = async (req, res) => {
 		// Dados
-		const {anotTitulo, anotConteudo} = req.body;
-		const anotacao = {anotTitulo, anotConteudo};
+		const {titulo, conteudo} = req.body;
+		const anotacao = {titulo, conteudo};
 
 		await Anotacao.create(anotacao);
 
-		res.redirect('/');
+		res.json("Salvo com sucesso!");
 	}
 
 	// Buscar todas
