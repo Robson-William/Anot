@@ -103,6 +103,8 @@ nav ul li a:hover {
 }
 
 section {
+	display: flex;
+	flex-direction: column;
 	margin: 0;
 	width: 100%
 }
@@ -112,7 +114,7 @@ section {
 	background-color: #F58200;
 	border-radius: 9px;
 	width: 80%;
-	margin: 3% 10%;
+	margin: 1% 10%;
 }
 
 .card-content {

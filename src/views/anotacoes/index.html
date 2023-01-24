@@ -11,16 +11,18 @@
 		<div><a href="/add">Adicionar</a></div>
 	</div>
 
-	<section>
-		<div class="card">
-			<div class="card-content">
-				<h2>Abertura Caro-Kann</h2>
-				<p>A abertura Caro-Kann é jogada como resposta à jogada e4 das brancas. As brancas jogam d4 e as pretas jogam d5</p>
-			</div>
-			<div class="card-btn">
-				<button>Edit</button>
-				<button>Delete</button>
-			</div>
-		<div>
-	</section>
+	{% for card in anotacoes %}
+		<section>
+			<div class="card">	
+				<div class="card-content">
+					<h2>{{ card.titulo }}</h2>
+					<p>{{ card.conteudo }}</p>
+				</div>
+				<div class="card-btn">
+					<button>Edit</button>
+					<button>Delete</button>
+				</div>
+			<div>
+		</section>
+	{% endfor %}
 {% endblock %}
