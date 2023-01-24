@@ -9,6 +9,7 @@ body {
 	background-color: #1B1B1B;
 }
 
+/* Menu */
 h1 {
 	font-family: "Inter";
 	font-style: normal;
@@ -19,6 +20,30 @@ h1 {
 	margin: 20px;
 }
 
+nav ul {
+	display: flex;
+	background-color: #F58200;
+	list-style-type: none;
+	font-family: "Inter";
+	overflow: hidden;
+}
+
+nav ul li a {
+	display: block;
+	padding: 14px 16px;
+	border-right: solid 1px #000000;
+	border-radius: 0 5px 5px 0;
+	text-decoration: none;
+	text-align: center;
+	color: #000000;
+}
+
+nav ul li a:hover {
+	background-color: #DE5D0B;
+}
+
+/* Página principal */
+
 .btn {
 	display: flex;
 	width: 100%;
@@ -26,7 +51,7 @@ h1 {
 }
 
 .btn input[type="text"] {
-	border: 2px solid #F58200;
+	border: 2px solid #000000;
 	border-radius: 5px;
 	width: 200px;
 	padding: 10px;
@@ -35,16 +60,17 @@ h1 {
 	font-size: 100%;
 }
 
-.btn button {
+.btn button, .add-form button{
 	background-color: #F58200;
 	border: none;
 	border-radius: 5px;
-	padding: 12px;
+	padding: 12px 17px;
 	font-family: "Inter";
 	font-size: 14px;
 }
 
-.btn button:hover {
+.btn button:hover, .add-form button:hover {
+	background-color: #DE5D0B;
 	cursor: pointer;
 }
 
@@ -54,9 +80,26 @@ h1 {
 	margin-left: 10%;
 }
 
-.btn-add {
+.btn div {
 	margin-left: auto;
 	margin-right: 10%;
+}
+
+.btn a:link, .btn a:visited {
+	display: inline-block;
+	text-decoration: none;
+	background-color: #F58200;
+	border-radius: 5px;
+	padding: 13px;
+	font-family: "Inter";
+	font-size: 14px;
+	color: #000000;
+	text-align: center;
+}
+
+.btn a:hover {
+	cursor: pointer;
+	background-color: #DE5D0B;
 }
 
 section {
@@ -120,4 +163,30 @@ section {
 
 .card-btn button:hover {
 	cursor: pointer;
+}
+
+/* Página de cadastro */
+
+.add-form form {
+	margin: 2% 10%;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.add-form label {
+	font-family: "Inter";
+	font-size: 30px;
+}
+
+.add-form input, textarea {
+	margin: 1% 0;
+	padding: 10px;
+	width: 50%;
+	font-family: "Inter";
+	font-size: 100%;
+}
+
+.add-form textarea {
+	resize: none;
+	height: 200px;
 }
