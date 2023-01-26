@@ -1,111 +1,67 @@
 // Importando módulos
-import {client} from "../db/mongo.mjs";
 import * as dotenv from "dotenv";
+import * as Anotacao from '../models/Anotacao.mjs';
 
 // Configurações
 dotenv.config();
+
+// Rotas
+// Front
+	const index = async (req, res) => {
+		const anotacoes = await Anotacao.readAll();
+
+		res.render('anotacoes/index.html', {anotacoes});
+	}
+
+	const addForm = async (req, res) => {
+		res.render('anotacoes/form.html');
+	}
 
 // CRUD
 	// Adicionar anotação
 	const add = async (req, res) => {
 		// Dados
-		const {anotTitulo, anotConteudo} = req.body;
+		const {titulo, conteudo} = req.body;
+		const anotacao = {titulo, conteudo};
 
-		try {
-			// Configuração
-			await client.connect();
-			const db = await client.db(process.env.DBNAME);
-			const collection = await db.collection(process.env.DBCOLLECTION);
+		await Anotacao.create(anotacao);
 
-			// Inserir
-			const inserirResultado = await collection.insertMany([{titulo: anotTitulo, conteudo: anotConteudo}]);
-			res.status(200).json(inserirResultado);
-		}catch {
-			res.status(400).send("Falha ao salvar!");
-		}finally {
-			client.close();
-		}
+		res.json("Salvo com sucesso!");
 	}
 
 	// Buscar todas
 	const list = async (req, res) => {
-		try {
-			// Configurações
-			await client.connect();
-			const db = client.db(process.env.DBNAME);
-			const collection = db.collection(process.env.DBCOLLECTION);
+		const lista = await Anotacao.readAll();
 
-			// Função
-			const buscarTodos = await collection.find({}).toArray();
-			res.status(200).json(buscarTodos);
-		}catch {
-			res.status(400).send("Falha ao buscar!");
-		}finally {
-			client.close();
-		}
+		res.json(lista);
 	}
 
 	// Busca específica
 	const busca = async (req, res) => {
 		const {pesquisa} = req.body;
-
-		try {
-			// Configurações
-			await client.connect();
-			const db = client.db(process.env.DBNAME);
-			const collection = db.collection(process.env.DBCOLLECTION);
-
-			// Função
-			const filtro = await collection.find({$text: {$search: pesquisa}}).toArray();
-			res.status(200).json(filtro);
-		}catch(e) {
-			res.status(400).send("Falha ao buscar!");
-		}finally {
-			client.close();
-		}
-
+		
+		const buscarUm = await Anotacao.readOne(pesquisa);
+		
+		res.json(buscarUm);
 	}
 
 	// Atualizar
 	const update = async (req, res) => {
 		const {pesquisa, atualizado} = req.body;
+		
+		const updated = await Anotacao.update(pesquisa, atualizado);
 
-		try{
-			// Configurações
-			await client.connect();
-			const db = client.db(process.env.DBNAME);
-			const collection = db.collection(process.env.DBCOLLECTION);
-
-			// Função
-			const filtro = await collection.updateOne({titulo: pesquisa}, {$set: {titulo: atualizado}});
-			res.status(200).json(atualizado);
-		}catch {
-			res.status(400).send("Erro ao atualizar");
-		}finally{
-			client.close();
-		}
+		res.json(updated);
 	}
 
 	// Deletar
 	const deletar = async (req, res) => {
 		const {pesquisa} = req.body;
+		
+		const deletado = await Anotacao.deletar(pesquisa);
 
-		try{
-			// Configurações
-			await client.connect();
-			const db = client.db(process.env.DBNAME);
-			const collection = db.collection(process.env.DBCOLLECTION);
-
-			// Função
-			const filtro = await collection.deleteMany({titulo: pesquisa});
-			res.status(200).send("Deletado!");
-		}catch {
-			res.status(400).send("Erro ao deletar!");
-		}finally{
-			client.close();
-		}
+		res.json(deletado);
 	}
 
 
-
-export {add, list, busca, update, deletar};
+export {add, list, busca, update, deletar, index, addForm};

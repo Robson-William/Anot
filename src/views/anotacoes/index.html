@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% set title = "Home" %}
+
+{% block content %}
+	<div class="btn">
+		<form>
+			<input type="text" id="fpesquisa" placeholder="Digite aqui..." name="pesquisa">
+			<button class="btn-pesquisa" type="submit">Pesquisar</button>
+		</form>
+		<div><a href="/add">Adicionar</a></div>
+	</div>
+
+	{% for card in anotacoes %}
+		<section>
+			<div class="card">	
+				<div class="card-content">
+					<h2>{{ card.titulo }}</h2>
+					<p>{{ card.conteudo }}</p>
+				</div>
+				<div class="card-btn">
+					<button>Edit</button>
+					<button>Delete</button>
+				</div>
+			<div>
+		</section>
+	{% endfor %}
+{% endblock %}
