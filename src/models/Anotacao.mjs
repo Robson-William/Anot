@@ -1,6 +1,7 @@
 // Importando módulos
 import {client} from '../db/mongo.mjs';
 import * as dotenv from 'dotenv';
+import {ObjectId} from 'mongodb';
 
 
 // CRUD
@@ -77,7 +78,7 @@ import * as dotenv from 'dotenv';
 	}
 
 	// Deletar
-	async function deletar(pesquisa){
+	async function deletar(id){
 		try{
 			// Configurações
 			await client.connect();
@@ -85,8 +86,8 @@ import * as dotenv from 'dotenv';
 			const collection = db.collection(process.env.DBCOLLECTION);
 
 			// Função
-			const filtro = await collection.deleteMany({titulo: pesquisa});
-			return 'Deletado!'
+			const filtro = await collection.deleteMany({_id: ObjectId(id)});
+			return 'Deletado!';
 		}catch(err) {
 			console.log(err);
 		}finally{

@@ -56,11 +56,11 @@ dotenv.config();
 
 	// Deletar
 	const deletar = async (req, res) => {
-		const {pesquisa} = req.body;
+		const {id} = req.body;
 		
-		const deletado = await Anotacao.deletar(pesquisa);
+		const deletado = await Anotacao.deletar(id);
 
-		res.json(deletado);
+		res.redirect("/");
 	}
 
 

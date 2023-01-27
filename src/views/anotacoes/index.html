@@ -18,10 +18,10 @@
 					<h2>{{ card.titulo }}</h2>
 					<p>{{ card.conteudo }}</p>
 				</div>
-				<div class="card-btn">
-					<button>Edit</button>
-					<button>Delete</button>
-				</div>
+				<form class="card-btn" action="/delete" method="POST">
+					<input type="hidden" id="fid" name="id" value="{{ card._id }}">
+					<button type="submit">Delete</button>
+				</form>
 			<div>
 		</section>
 	{% endfor %}

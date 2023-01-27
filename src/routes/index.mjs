@@ -10,8 +10,8 @@ const router = express.Router();
 	router.get("/readAll", Rota.list);
 	router.get("/readOne", Rota.busca);
 	router.post("/create", Rota.add);
-	router.put("/update", Rota.update);
-	router.delete("/delete", Rota.deletar);
+	router.put("/update/:id", Rota.update);
+	router.post("/delete", Rota.deletar);
 
 	// Rotas frontend
 	router.get('/', Rota.index);
