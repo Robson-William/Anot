@@ -38,11 +38,11 @@ dotenv.config();
 
 	// Busca específica
 	const busca = async (req, res) => {
-		const {pesquisa} = req.body;
+		const {pesquisa} = req.query;
 		
-		const buscarUm = await Anotacao.readOne(pesquisa);
+		const anotacoes = await Anotacao.readOne(pesquisa);
 		
-		res.json(buscarUm);
+		res.render("anotacoes/index.html", {anotacoes});
 	}
 
 	// Atualizar
