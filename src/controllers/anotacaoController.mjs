@@ -26,7 +26,7 @@ dotenv.config();
 
 		await Anotacao.create(anotacao);
 
-		res.json("Salvo com sucesso!");
+		res.redirect("/");
 	}
 
 	// Buscar todas
