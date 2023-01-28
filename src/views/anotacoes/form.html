@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
 <div class="add-form">
-	<form action="/create" method="POST">
+	<form action="{{ '/notes/' + mode}}" method="POST">
+		<input type="hidden" value="{{ note[0]._id if note else '' }}" name="id">
 		<label>Título</label><br>
-		<input type="text" id="ftitulo" name="titulo"><br>
+		<input type="text" id="ftitulo" name="titulo" value="{{ note[0].titulo if note else '' }}"><br>
 		<label>Conteudo</label><br>
-		<textarea type="text" id="fconteudo" name="conteudo"></textarea><br>
+		<textarea type="text" id="fconteudo" name="conteudo">{{ note[0].conteudo if note else ''}}</textarea><br>
 		<button type="submit">Enviar</button>
 	</form>
 </div>

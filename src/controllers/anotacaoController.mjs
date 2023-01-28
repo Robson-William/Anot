@@ -1,5 +1,5 @@
 // Importando módulos
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 import * as Anotacao from '../models/Anotacao.mjs';
 
 // Configurações
@@ -8,13 +8,32 @@ dotenv.config();
 // Rotas
 // Front
 	const index = async (req, res) => {
-		const anotacoes = await Anotacao.readAll();
+		const notes = await Anotacao.readAll();
 
-		res.render('anotacoes/index.html', {anotacoes});
+		res.render('anotacoes/index.html', {notes});
 	}
 
 	const addForm = async (req, res) => {
+		res.locals.mode = 'create';
+
 		res.render('anotacoes/form.html');
+	}
+
+	const getUpdateForm = async (req, res) => {
+		const {id} = req.params;
+
+		const note = await Anotacao.readOne(id);
+
+		res.locals.mode = 'update';
+		res.render('anotacoes/form.html', {note});
+	}
+
+	const getDeleteForm = async (req, res) => {
+		const {id} = req.params;
+
+		const note = await Anotacao.readOne(id);
+		
+		res.render('anotacoes/delete.html', {note});
 	}
 
 // CRUD
@@ -26,7 +45,7 @@ dotenv.config();
 
 		await Anotacao.create(anotacao);
 
-		res.redirect("/");
+		res.redirect('/');
 	}
 
 	// Buscar todas
@@ -36,32 +55,33 @@ dotenv.config();
 		res.json(lista);
 	}
 
-	// Busca específica
-	const busca = async (req, res) => {
+	// Busca
+	const search = async (req, res) => {
 		const {pesquisa} = req.query;
 		
-		const anotacoes = await Anotacao.readOne(pesquisa);
+		const notes = await Anotacao.search(pesquisa);
 		
-		res.render("anotacoes/index.html", {anotacoes});
+		res.render('anotacoes/index.html', {notes});
 	}
 
 	// Atualizar
 	const update = async (req, res) => {
-		const {pesquisa, atualizado} = req.body;
-		
-		const updated = await Anotacao.update(pesquisa, atualizado);
+		const {id, titulo, conteudo} = req.body;
+		const note = {id, titulo, conteudo};
 
-		res.json(updated);
+		const updated = await Anotacao.update(note);
+
+		res.redirect('/')
 	}
 
 	// Deletar
 	const deletar = async (req, res) => {
 		const {id} = req.body;
-		
+
 		const deletado = await Anotacao.deletar(id);
 
-		res.redirect("/");
+		res.redirect('/');
 	}
 
 
-export {add, list, busca, update, deletar, index, addForm};
+export {add, list, search, update, deletar, index, addForm, getUpdateForm, getDeleteForm};

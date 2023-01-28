@@ -42,7 +42,26 @@ import {ObjectId} from 'mongodb';
 	}
 
 	// Busca específica
-	async function readOne(pesquisa){
+	async function readOne(id){
+		try {
+			// Configurações
+			await client.connect();
+			const db = client.db(process.env.DBNAME);
+			const collection = db.collection(process.env.DBCOLLECTION);
+
+			// Função
+			const filtro = await collection.find({_id: ObjectId(id)}).toArray();
+			return filtro;
+		}catch(err) {
+			console.log(err);
+		}finally {
+			client.close();
+		}
+
+	}
+
+	// Busca
+	async function search(pesquisa){
 		try {
 			// Configurações
 			await client.connect();
@@ -60,7 +79,7 @@ import {ObjectId} from 'mongodb';
 	}
 
 	// Atualizar
-	async function update(pesquisa, atualizado){
+	async function update(note){
 		try{
 			// Configurações
 			await client.connect();
@@ -68,7 +87,7 @@ import {ObjectId} from 'mongodb';
 			const collection = db.collection(process.env.DBCOLLECTION);
 
 			// Função
-			const filtro = await collection.updateOne({titulo: pesquisa}, {$set: {titulo: atualizado}});
+			const filtro = await collection.updateOne({_id: ObjectId(note.id)}, {$set: {titulo: note.titulo, conteudo: note.conteudo}});
 			return filtro;
 		}catch(err) {
 			console.log(err);
@@ -95,4 +114,4 @@ import {ObjectId} from 'mongodb';
 		}
 	}
 
-export {create, readAll, readOne, update, deletar};
+export {create, readAll, readOne, search, update, deletar};

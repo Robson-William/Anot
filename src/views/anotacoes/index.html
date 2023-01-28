@@ -4,24 +4,22 @@
 
 {% block content %}
 	<div class="btn">
-		<form action="/readOne">
+		<form action="/notes/search">
 			<input type="text" id="fpesquisa" placeholder="Digite aqui..." name="pesquisa">
 			<button class="btn-pesquisa" type="submit">Pesquisar</button>
 		</form>
-		<div><a href="/add">Adicionar</a></div>
+		<div><a href="/notes/cadastro">Adicionar</a></div>
 	</div>
 
-	{% for card in anotacoes %}
+	{% for card in notes %}
 		<section>
 			<div class="card">	
 				<div class="card-content">
 					<h2>{{ card.titulo }}</h2>
 					<p>{{ card.conteudo }}</p>
 				</div>
-				<form class="card-btn" action="/delete" method="POST">
-					<input type="hidden" id="fid" name="id" value="{{ card._id }}">
-					<button type="submit">Delete</button>
-				</form>
+				<a href="/notes/update/{{ card._id }}">Editar</a>
+				<a href="/notes/delete/{{ card._id }}">Deletar</a>
 			<div>
 		</section>
 	{% endfor %}
