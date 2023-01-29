@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% set title = ("Editar" if mode === 'update' else "Cadastrar") %}
+
 {% block content %}
 
 <div class="add-form">
