@@ -3,8 +3,26 @@ import {client} from '../db/mongo.mjs';
 import * as dotenv from 'dotenv';
 import {ObjectId} from 'mongodb';
 
+// Variáveis
+let criado = false;
+
 
 // CRUD
+	// Criar index
+	async function index(){
+		if(!criado){
+			await client.connect();
+			const db = await client.db(process.env.DBNAME);
+			const collection = await db.collection(process.env.DBCOLLECTION);
+			
+			const index = await collection.createIndex({titulo: "text", conteudo: "text"}, {weights: {titulo: 2, conteudo: 1}});
+			criado = true;
+			return index;
+		} else {
+			return 'Index já foi criado.';
+		}
+	}
+
 	// Adicionar anotação
 	async function create(dados){
 		try {
@@ -12,6 +30,7 @@ import {ObjectId} from 'mongodb';
 			await client.connect();
 			const db = await client.db(process.env.DBNAME);
 			const collection = await db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Inserir
 			const inserirResultado = await collection.insertOne({titulo: dados.titulo, conteudo: dados.conteudo});
@@ -30,6 +49,7 @@ import {ObjectId} from 'mongodb';
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
 			const buscarTodos = await collection.find({}).toArray();
@@ -48,6 +68,7 @@ import {ObjectId} from 'mongodb';
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
 			const filtro = await collection.find({_id: ObjectId(id)}).toArray();
@@ -67,6 +88,7 @@ import {ObjectId} from 'mongodb';
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
 			const filtro = await collection.find({$text: {$search: pesquisa}}).toArray();
@@ -85,6 +107,7 @@ import {ObjectId} from 'mongodb';
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
 			const filtro = await collection.updateOne({_id: ObjectId(note.id)}, {$set: {titulo: note.titulo, conteudo: note.conteudo}});
@@ -103,6 +126,7 @@ import {ObjectId} from 'mongodb';
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
 			const filtro = await collection.deleteMany({_id: ObjectId(id)});
