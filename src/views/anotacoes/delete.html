@@ -1,8 +1,21 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<form class="card-btn" action="/notes/delete" method="POST">
-	<input type="hidden" id="fid" name="id" value="{{ note[0]._id }}">
-	<button type="submit">Delete</button>
-</form>
+<section>
+	<h3>Deseja realmente exluir essa nota?</h3>
+
+	<div class="card">	
+		<div class="card-content">
+			<h2>{{ note[0].titulo }}</h2>
+			<p>{{ note[0].conteudo }}</p>
+		</div>
+	<div>
+</section>
+
+<div class="delete-btn">
+	<form action="/notes/delete" method="POST">
+		<input type="hidden" id="fid" name="id" value="{{ note[0]._id }}">
+		<button type="submit">Delete</button>
+	</form>
+</div>
 {% endblock %}

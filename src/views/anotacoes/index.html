@@ -18,8 +18,10 @@
 					<h2>{{ card.titulo }}</h2>
 					<p>{{ card.conteudo }}</p>
 				</div>
-				<a href="/notes/update/{{ card._id }}">Editar</a>
-				<a href="/notes/delete/{{ card._id }}">Deletar</a>
+				<div class="card-btn">
+					<a href="/notes/update/{{ card._id }}">Editar</a>
+					<a href="/notes/delete/{{ card._id }}">Deletar</a>
+				</div>
 			<div>
 		</section>
 	{% endfor %}

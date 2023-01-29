@@ -120,6 +120,7 @@ section {
 .card-content {
 	width: 85%;
 	display: column;
+	flex-shrink: 0;
 }
 
 .card-content h2 {
@@ -151,16 +152,18 @@ section {
 	overflow: hidden;
 }
 
-.card-btn button {
+.card-btn a {
 	background: #33363F;
 	border: none;
 	border-radius: 9px;
 	text-decoration: none;
 	text-align: center;
+	vertical-align: center;
 	font-family: "Inter";
 	font-size: 100%;
 	color: #FFFFFF;
 	margin: 2px 0 2px 0;
+	padding: 4px;
 	width: 40%;
 	height: 25%;
 }
@@ -195,3 +198,37 @@ section {
 	resize: none;
 	height: 200px;
 }
+
+/* Página de delete */
+h3 {
+	font-family: "Inter";
+	font-size: 50px;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.delete-btn form {
+	position: relative;
+}
+
+.delete-btn form button {
+	background: #33363F;
+	border: none;
+	border-radius: 9px;
+	text-decoration: none;
+	text-align: center;
+	font-family: "Inter";
+	font-size: 100%;
+	color: #FFFFFF;
+	margin: 0;
+	padding: 20px;
+	position: absolute;
+	top: 50%;
+	left: 10%;
+}
+
+.delete-btn form button:hover {
+	cursor: pointer;
+	text-decoration: none;
+}
+
