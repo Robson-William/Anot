@@ -155,6 +155,8 @@ section {
 	background: #33363F;
 	border: none;
 	border-radius: 9px;
+	text-decoration: none;
+	text-align: center;
 	font-family: "Inter";
 	font-size: 100%;
 	color: #FFFFFF;
@@ -163,8 +165,9 @@ section {
 	height: 25%;
 }
 
-.card-btn button:hover {
+.card-btn a:hover {
 	cursor: pointer;
+	text-decoration: none;
 }
 
 /* Página de cadastro */

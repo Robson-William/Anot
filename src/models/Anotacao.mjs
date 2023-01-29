@@ -1,9 +1,28 @@
 // Importando módulos
 import {client} from '../db/mongo.mjs';
 import * as dotenv from 'dotenv';
+import {ObjectId} from 'mongodb';
+
+// Variáveis
+let criado = false;
 
 
 // CRUD
+	// Criar index
+	async function index(){
+		if(!criado){
+			await client.connect();
+			const db = await client.db(process.env.DBNAME);
+			const collection = await db.collection(process.env.DBCOLLECTION);
+			
+			const index = await collection.createIndex({titulo: "text", conteudo: "text"}, {weights: {titulo: 2, conteudo: 1}});
+			criado = true;
+			return index;
+		} else {
+			return 'Index já foi criado.';
+		}
+	}
+
 	// Adicionar anotação
 	async function create(dados){
 		try {
@@ -11,6 +30,7 @@ import * as dotenv from 'dotenv';
 			await client.connect();
 			const db = await client.db(process.env.DBNAME);
 			const collection = await db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Inserir
 			const inserirResultado = await collection.insertOne({titulo: dados.titulo, conteudo: dados.conteudo});
@@ -29,6 +49,7 @@ import * as dotenv from 'dotenv';
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
 			const buscarTodos = await collection.find({}).toArray();
@@ -41,12 +62,33 @@ import * as dotenv from 'dotenv';
 	}
 
 	// Busca específica
-	async function readOne(pesquisa){
+	async function readOne(id){
 		try {
 			// Configurações
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
+
+			// Função
+			const filtro = await collection.find({_id: ObjectId(id)}).toArray();
+			return filtro;
+		}catch(err) {
+			console.log(err);
+		}finally {
+			client.close();
+		}
+
+	}
+
+	// Busca
+	async function search(pesquisa){
+		try {
+			// Configurações
+			await client.connect();
+			const db = client.db(process.env.DBNAME);
+			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
 			const filtro = await collection.find({$text: {$search: pesquisa}}).toArray();
@@ -59,15 +101,16 @@ import * as dotenv from 'dotenv';
 	}
 
 	// Atualizar
-	async function update(pesquisa, atualizado){
+	async function update(note){
 		try{
 			// Configurações
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
-			const filtro = await collection.updateOne({titulo: pesquisa}, {$set: {titulo: atualizado}});
+			const filtro = await collection.updateOne({_id: ObjectId(note.id)}, {$set: {titulo: note.titulo, conteudo: note.conteudo}});
 			return filtro;
 		}catch(err) {
 			console.log(err);
@@ -77,16 +120,17 @@ import * as dotenv from 'dotenv';
 	}
 
 	// Deletar
-	async function deletar(pesquisa){
+	async function deletar(id){
 		try{
 			// Configurações
 			await client.connect();
 			const db = client.db(process.env.DBNAME);
 			const collection = db.collection(process.env.DBCOLLECTION);
+			index();
 
 			// Função
-			const filtro = await collection.deleteMany({titulo: pesquisa});
-			return 'Deletado!'
+			const filtro = await collection.deleteMany({_id: ObjectId(id)});
+			return 'Deletado!';
 		}catch(err) {
 			console.log(err);
 		}finally{
@@ -94,4 +138,4 @@ import * as dotenv from 'dotenv';
 		}
 	}
 
-export {create, readAll, readOne, update, deletar};
+export {create, readAll, readOne, search, update, deletar};
