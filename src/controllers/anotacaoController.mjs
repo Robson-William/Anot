@@ -7,18 +7,21 @@ dotenv.config();
 
 // Rotas
 // Front
+	// Página inicial
 	const index = async (req, res) => {
 		const notes = await Anotacao.readAll();
 
 		res.render('anotacoes/index.html', {notes});
 	}
 
+	// Página de cadastro
 	const addForm = async (req, res) => {
 		res.locals.mode = 'create';
 
 		res.render('anotacoes/form.html');
 	}
 
+	// Página para atualizar
 	const getUpdateForm = async (req, res) => {
 		const {id} = req.params;
 
@@ -28,12 +31,22 @@ dotenv.config();
 		res.render('anotacoes/form.html', {note});
 	}
 
+	// Página para deletar
 	const getDeleteForm = async (req, res) => {
 		const {id} = req.params;
 
 		const note = await Anotacao.readOne(id);
 		
 		res.render('anotacoes/delete.html', {note});
+	}
+
+	// Página da anotação
+	const getNote = async (req, res) => {
+		const {id} = req.params;
+
+		const note = await Anotacao.readOne(id);
+
+		res.render('anotacoes/note.html', {note});
 	}
 
 // CRUD
@@ -84,4 +97,4 @@ dotenv.config();
 	}
 
 
-export {add, list, search, update, deletar, index, addForm, getUpdateForm, getDeleteForm};
+export {add, list, search, update, deletar, index, addForm, getUpdateForm, getDeleteForm, getNote};

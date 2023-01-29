@@ -13,7 +13,10 @@
 
 	{% for card in notes %}
 		<section>
-			<div class="card">	
+			<div class="card">
+				<div class="card-read">
+					<a href="/notes/anotacao/{{ card._id }}">Ler</a>
+				</div>
 				<div class="card-content">
 					<h2>{{ card.titulo }}</h2>
 					<p>{{ card.conteudo }}</p>

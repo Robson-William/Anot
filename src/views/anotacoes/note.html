@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% set title = 'Anot' %}
+
+{% block content %}
+<div class="note">
+	<h2>{{ note[0].titulo }}</h2>
+
+	<p>{{ note[0].conteudo }}</p>
+</div>
+{% endblock %}

@@ -19,6 +19,7 @@ const router = express.Router();
 	router.get('/notes/cadastro', Rota.addForm);
 	router.get('/notes/update/:id', Rota.getUpdateForm);
 	router.get('/notes/delete/:id', Rota.getDeleteForm);
+	router.get("/notes/anotacao/:id", Rota.getNote);
 
 // Exportar módulo
 export default router;
