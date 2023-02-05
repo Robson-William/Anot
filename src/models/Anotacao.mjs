@@ -14,7 +14,7 @@ const AnotSchema = new Schema({
 	conteudo: String
 }).index({titulo: "text", conteudo: "text"}, {weights: {titulo: 2, conteudo: 1}});
 
-const Anot = client.model('Anot', AnotSchema);
+const Anot = client.model('Note', AnotSchema);
 
 // CRUD
 	// Adicionar anotação
