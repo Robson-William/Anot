@@ -10,7 +10,6 @@ const ObjectId = Schema.ObjectId;
 
 // Model
 const AnotSchema = new Schema({
-	id: ObjectId,
 	titulo: String,
 	conteudo: String
 }).index({titulo: "text", conteudo: "text"}, {weights: {titulo: 2, conteudo: 1}});
@@ -49,7 +48,7 @@ const Anot = client.model('Anot', AnotSchema);
 	async function readOne(id){
 		try {
 			// Função
-			const filtro = await Anot.findOne({_id: ObjectId(id)});
+			const filtro = await Anot.find({_id: id});
 			return filtro;
 		}catch(err) {
 			console.log(err);
@@ -60,7 +59,7 @@ const Anot = client.model('Anot', AnotSchema);
 	async function search(pesquisa){
 		try {
 			// Função
-			const filtro = await Anot.find({$text: {$search: pesquisa}});
+			const filtro = await Anot.find({$text: {$search: pesquisa}}, {score: {$meta: 'textScore'}});
 			return filtro;
 		}catch(err) {
 			console.log(err);
@@ -71,7 +70,7 @@ const Anot = client.model('Anot', AnotSchema);
 	async function update(note){
 		try{
 			// Função
-			const filtro = await Anot.update({_id: ObjectId(note.id)}, {$set: {titulo: note.titulo, conteudo: note.conteudo}});
+			const filtro = await Anot.update({_id: note.id}, {$set: {titulo: note.titulo, conteudo: note.conteudo}});
 			return filtro;
 		}catch(err) {
 			console.log(err);
@@ -82,7 +81,7 @@ const Anot = client.model('Anot', AnotSchema);
 	async function deletar(id){
 		try{
 			// Função
-			const filtro = await Anot.delete({_id: ObjectId(id)});
+			const filtro = await Anot.deleteOne({_id: id});
 			return 'Deletado!';
 		}catch(err) {
 			console.log(err);
