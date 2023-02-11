@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% set title = "Cadastrar usuário" %}
+
+{% block content %}
+
+<div class="add-form">
+	<form action="/signup" method="POST">
+		<label>Nome: </label>
+		<input type="text" id="fnome" name="nome"><br>
+		<label>Usuário: </label>
+		<input type="text" id="fuser" name="usuario"><br>
+		<label>Senha: </label>
+		<input type="password" id="fsenha" name="senha"><br>
+		<button type="submit">Enviar</button>
+	</form>
+</div>
+
+{% endblock %}

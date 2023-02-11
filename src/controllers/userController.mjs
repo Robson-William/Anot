@@ -10,7 +10,7 @@ dotenv.config();
 // Frontend
 	// Página de cadastro
 	const create = (req, res) => {
-		res.render('users/cadastro');
+		res.render('users/signup');
 	}
 
 	// Página de login
@@ -49,7 +49,7 @@ dotenv.config();
 	try {
 		const {usuario, senha} = req.body;
 
-		const user = User.readByUser(usuario);
+		const user = await User.readByUser(usuario);
 
 		const match = await bcrypt.compare(senha, user.senha);
 

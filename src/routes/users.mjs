@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Rotas
 	// Backend | API Rest
-	router.post('/signout', Rota.add); // Cria novo usuário
+	router.post('/signup', Rota.add); // Cria novo usuário
 	router.post('/signin', Rota.authenticate); // Verifica se o usuário existe
 	router.get('/signout', Rota.signout);  // Sai da sessão
 

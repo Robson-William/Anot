@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% set title = "Login" %}
+
+{% block content %}
+
+<div class="add-form">
+	<form action="/signin" method="POST">
+		<label>Usuário: </label>
+		<input type="text" id="fuser" name="usuario"><br>
+		<label>Senha: </label>
+		<input type="password" id="fsenha" name="senha"><br>
+		<button type="submit">Enviar</button>
+	</form>
+</div>
+
+{% endblock %}

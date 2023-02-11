@@ -24,7 +24,7 @@ const User = client.model('Usuario', UserSchema);
 			const novo = User({
 				nome: dados.nome,
 				usuario: dados.usuario,
-				senha: dados.passwd
+				senha: dados.senha
 			})
 
 			const inserirResultado = await novo.save();
@@ -48,7 +48,7 @@ const User = client.model('Usuario', UserSchema);
 	// Buscar um usuário específico
 	async function readOne(id){
 		try {
-			const resultadoBusca = await User.find({_id: id});
+			const resultadoBusca = await User.findOne({_id: id});
 
 			return resultadoBusca;
 		} catch(err){
@@ -59,7 +59,7 @@ const User = client.model('Usuario', UserSchema);
 	// Buscar por usuário
 	async function readByUser(user){
 		try {
-			const resultadoBusca = await User.find({usuario: user.usuario});
+			const resultadoBusca = await User.findOne({usuario: user});
 
 			return resultadoBusca;
 		} catch(err){

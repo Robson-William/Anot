@@ -13,5 +13,7 @@ const router = express.Router();
 	router.use(usersRouter);
 	router.use('/notes', notesRouter);
 
+	router.get("/", (req, res) => res.redirect("/notes/index")); // Redireciona a página principal
+
 // Exportar módulo
 export default router;
