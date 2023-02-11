@@ -10,12 +10,12 @@ dotenv.config();
 // Frontend
 	// Página de cadastro
 	const create = (req, res) => {
-		res.render('users/cadastro.html');
+		res.render('users/cadastro');
 	}
 
 	// Página de login
 	const signin = (req, res) => {
-		res.render('users/login.html');
+		res.render('users/signin');
 	}
 
 	// Signout
