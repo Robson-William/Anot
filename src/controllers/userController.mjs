@@ -1,5 +1,5 @@
 // Importando módulos
-import * as User from '../models/Usuario.mjs';
+import * as User from '../models/Usuarios.mjs';
 import * as dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -28,7 +28,7 @@ dotenv.config();
 
 // Backend
  // Adicionar usuário
- const add = async function (req, res) => {
+ const add = async (req, res) => {
  	const {nome, usuario, senha} = req.body;
 		
 	try {
@@ -76,4 +76,4 @@ dotenv.config();
 	}
  }
 
-export {create, signin, signout, authenticate};
+export {create, signin, signout, add, authenticate};

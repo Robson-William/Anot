@@ -15,7 +15,7 @@ const UserSchema = new Schema ({
 	senha: String
 });
 
-const User = UserSchema.model('Usuario', UserSchema);
+const User = client.model('Usuario', UserSchema);
 
 // CRUD
 	// Adicionar usuário
@@ -59,7 +59,7 @@ const User = UserSchema.model('Usuario', UserSchema);
 	// Buscar por usuário
 	async function readByUser(user){
 		try {
-			const resultadoBusca = await User.find(usuario: user.usuario);
+			const resultadoBusca = await User.find({usuario: user.usuario});
 
 			return resultadoBusca;
 		} catch(err){
