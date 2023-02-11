@@ -56,6 +56,17 @@ const User = UserSchema.model('Usuario', UserSchema);
 		}
 	}
 
+	// Buscar por usuário
+	async function readByUser(user){
+		try {
+			const resultadoBusca = await User.find(usuario: user.usuario);
+
+			return resultadoBusca;
+		} catch(err){
+			console.log(err);
+		}
+	}
+
 	// Buscar usuário por texto
 	async function search(pesquisa){
 		try {
@@ -100,4 +111,4 @@ const User = UserSchema.model('Usuario', UserSchema);
 		}
 	}
 
-export {create, readOne, readAll, search, update, deleteAll, deleteOne};
+export {create, readOne, readAll, readByUser, search, update, deleteAll, deleteOne};
