@@ -1,4 +1,11 @@
 import jwt from 'jsonwebtoken';
+import {randomBytes} from 'node:crypto';
+
+// Iniciando váriaveis locais
+	const locals = (req, res, next) => {
+		res.locals.user = req.session.user;
+		next();
+	}
 
 // Autenticação de rota
 	const authenticated = async (req, res, next) => {
@@ -16,9 +23,9 @@ import jwt from 'jsonwebtoken';
 				res.redirect('/');
 			}
 		} else {
-			res.session.user = null;
-			return res.redirect('signin')
+			req.session.user = null;
+			return res.redirect('/')
 		}
 	}
 
-export {authenticated};
+export {locals, authenticated};
