@@ -1,5 +1,6 @@
 // Importando módulos
 import {client} from '../db/mongo.mjs';
+import {driver} from '../db/neo4j.mjs';
 import * as dotenv from 'dotenv';
 
 // Configurando
@@ -21,6 +22,7 @@ const User = client.model('Usuario', UserSchema);
 	// Adicionar usuário
 	async function create(dados){
 		try {
+			// Mongoose
 			const novo = User({
 				nome: dados.nome,
 				usuario: dados.usuario,
@@ -28,9 +30,22 @@ const User = client.model('Usuario', UserSchema);
 			})
 
 			const inserirResultado = await novo.save();
+
+			// Neo4j
+			const session = driver.session();
+
+			const user = await session.run(
+			'CREATE (:Usuario{id: $id, nome: $nome, usuario: $usuario})',
+			{id: JSON.stringify(inserirResultado._id), nome: inserirResultado.nome, usuario: inserirResultado.usuario}
+			);
+
+			await session.close();
+
 			return inserirResultado;
-		} catch(err){
+		} catch(err) {
 			console.log(err);
+		} finally {
+			await driver.close();
 		}
 	}
 

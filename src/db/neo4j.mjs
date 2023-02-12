@@ -1,5 +1,5 @@
 // Importando módulos
-import neo4j from 'neo4j';
+import neo4j from 'neo4j-driver';
 import * as dotenv from 'dotenv';
 
 // Configurando
