@@ -19,7 +19,6 @@ app.set('view engine', 'html');
 
 app.use(session({
 		secret: process.env.SECRET,
-		name: 'session',
 		resave: false,
 		saveUninitialized: true,
 		cookie: {maxAge: 7 * 24 * 60 * 60 * 1000}

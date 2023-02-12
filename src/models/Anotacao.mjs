@@ -1,5 +1,6 @@
 // Importando módulos
 import {client} from '../db/mongo.mjs';
+import {driver} from '../db/neo4j.mjs';
 import * as dotenv from 'dotenv';
 
 // Variáveis
@@ -18,7 +19,7 @@ const Anot = client.model('Note', AnotSchema);
 
 // CRUD
 	// Adicionar anotação
-	async function create(dados){
+	async function create(dados, userId){
 		try {
 			// Inserir
 			const novo = Anot({
@@ -27,6 +28,24 @@ const Anot = client.model('Note', AnotSchema);
 			})
 
 			const inserirResultado = await novo.save();
+
+			// Neo4j
+			const session = driver.session();
+
+			const note = await session.run(
+			'CREATE (n:Anotacao{noteId: $id, titulo: $titulo})',
+			{id: `${inserirResultado._id}`, titulo: inserirResultado.titulo}
+			);
+			
+			const relacao = await session.run(
+			'MATCH (u:Usuario{userId: $idUser})' +
+			'OPTIONAL MATCH (n:Anotacao{noteId: $idNote})' +
+			'CREATE (u)-[:CRIOU]->(n)',
+			{idUser: userId, idNote: `${inserirResultado._id}`}
+			)
+
+			await session.close();
+
 			return inserirResultado;
 		}catch(err) {
 			console.log(err);

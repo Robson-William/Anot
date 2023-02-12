@@ -55,8 +55,10 @@ dotenv.config();
 		// Dados
 		const {titulo, conteudo} = req.body;
 		const anotacao = {titulo, conteudo};
+		
+		const userId = req.session.user._id;
 
-		await Anotacao.create(anotacao);
+		const dados = await Anotacao.create(anotacao, userId);
 
 		res.redirect('/');
 	}

@@ -35,8 +35,8 @@ const User = client.model('Usuario', UserSchema);
 			const session = driver.session();
 
 			const user = await session.run(
-			'CREATE (:Usuario{id: $id, nome: $nome, usuario: $usuario})',
-			{id: JSON.stringify(inserirResultado._id), nome: inserirResultado.nome, usuario: inserirResultado.usuario}
+			'CREATE (u:Usuario{userId: $id, nome: $nome, usuario: $usuario})',
+			{id: `${inserirResultado._id}`, nome: inserirResultado.nome, usuario: inserirResultado.usuario}
 			);
 
 			await session.close();
@@ -44,8 +44,6 @@ const User = client.model('Usuario', UserSchema);
 			return inserirResultado;
 		} catch(err) {
 			console.log(err);
-		} finally {
-			await driver.close();
 		}
 	}
 

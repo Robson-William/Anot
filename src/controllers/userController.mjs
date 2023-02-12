@@ -38,7 +38,7 @@ dotenv.config();
 
 		const user = await User.create(novoUser);
 
-		res.redirect('/');
+		res.redirect('/login');
 	} catch(err){
 		console.log(err);
 	}
@@ -55,7 +55,7 @@ dotenv.config();
 
 		if(match){
 			const token = await jwt.sign(
-				{userId: user.id},
+				{userId: user._id},
 				process.env.SECRET,
 				{ expiresIn: 3600 }
 			)
@@ -69,7 +69,7 @@ dotenv.config();
 			res.redirect('/');
 		} else {
 			console.log('Senha inválida!');
-			res.redirect('/');
+			res.redirect('/login');
 		}
 	} catch(err){
 		console.log(err);
