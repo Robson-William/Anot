@@ -44,8 +44,6 @@ const Anot = client.model('Note', AnotSchema);
 			{idUser: userId, idNote: `${inserirResultado._id}`}
 			)
 
-			await session.close();
-
 			return inserirResultado;
 		}catch(err) {
 			console.log(err);
@@ -101,6 +99,16 @@ const Anot = client.model('Note', AnotSchema);
 		try{
 			// Função
 			const filtro = await Anot.deleteOne({_id: id});
+
+			// Neo4j
+			const session = driver.session();
+
+			const deleteNeo4j = session.run(
+				'MATCH (a:Anotacao{noteId: $noteId})' +
+				'DETACH DELETE a',
+				{noteId: id}
+			)
+
 			return 'Deletado!';
 		}catch(err) {
 			console.log(err);
