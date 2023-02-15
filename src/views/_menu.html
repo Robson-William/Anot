@@ -1,8 +1,14 @@
 <header>
 	<nav>
 		<ul>
-			<li><a href="/">Home</a></li>
+			<li><a href="/">Inicio</a></li>
+			{% if (user) %}
 			<li><a href="/notes/cadastro">Criar</a></li>
+			<li><a href="/signout">Sair</a></li>
+			{% else %}
+			<li><a href="/cadastro">Cadastro</a></li>
+			<li><a href="/login">Entrar</a></li>
+			{% endif %}
 		</ul>
 	</nav>
 	<h1 class="title">{{ title }}</h1>
