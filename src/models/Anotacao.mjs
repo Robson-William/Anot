@@ -33,8 +33,8 @@ const Anot = client.model('Note', AnotSchema);
 			const session = driver.session();
 
 			const note = await session.run(
-			'CREATE (n:Anotacao{noteId: $id, titulo: $titulo})',
-			{id: `${inserirResultado._id}`, titulo: inserirResultado.titulo}
+			'CREATE (n:Anotacao{noteId: $id, titulo: $titulo, conteudo: $conteudo})',
+			{id: `${inserirResultado._id}`, titulo: inserirResultado.titulo, conteudo: inserirResultado.conteudo}
 			);
 			
 			const relacao = await session.run(
@@ -55,6 +55,29 @@ const Anot = client.model('Note', AnotSchema);
 		try {
 			// Função
 			const buscarTodos = await Anot.find({});
+			return buscarTodos;
+		}catch(err) {
+			console.log(err);
+		}
+	}
+
+	// Buscar todas as anotações do usuário
+	async function readByUser(userId){
+		try {
+			// Função
+			const session = driver.session();
+
+			const notes = await session.run(
+				'MATCH (u:Usuario{userId: $id})-[:CRIOU]->(a:Anotacao) RETURN a',
+				{id: userId}
+			)
+			
+			let buscarTodos = [];
+
+			notes.records.forEach((note) => {
+				buscarTodos.push(note._fields[0].properties);
+			})
+
 			return buscarTodos;
 		}catch(err) {
 			console.log(err);
@@ -87,7 +110,18 @@ const Anot = client.model('Note', AnotSchema);
 	async function update(note){
 		try{
 			// Função
-			const filtro = await Anot.update({_id: note.id}, {$set: {titulo: note.titulo, conteudo: note.conteudo}});
+			const filtro = await Anot.updateOne({_id: note.id}, {$set: {titulo: note.titulo, conteudo: note.conteudo}});
+
+			// Neo4j
+			const session = driver.session();
+
+			const notaAtualizada = await session.run(
+				'MATCH (a:Anotacao{noteId: $id})' +
+				'SET a += {titulo: $titulo, conteudo: $conteudo}' +
+				'RETURN a',
+				{id: note.id, titulo: note.titulo, conteudo: note.conteudo}
+			)
+
 			return filtro;
 		}catch(err) {
 			console.log(err);
@@ -115,4 +149,4 @@ const Anot = client.model('Note', AnotSchema);
 		}
 	}
 
-export {create, readAll, readOne, search, update, deletar};
+export {create, readAll, readByUser, readOne, search, update, deletar};

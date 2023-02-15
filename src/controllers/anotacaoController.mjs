@@ -9,9 +9,17 @@ dotenv.config();
 // Front
 	// Página inicial
 	const index = async (req, res) => {
-		const notes = await Anotacao.readAll();
+		if(req.session.user){
+			const userId = req.session.user._id;
+			
+			const notes = await Anotacao.readByUser(userId);
 
-		res.render('anotacoes/index.html', {notes});
+			res.render('anotacoes/index.html', {notes});
+		} else {
+			const notes = Anotacao.readAll();
+
+			res.render('anotacoes/index.html', {notes});
+		}
 	}
 
 	// Página de cadastro
@@ -26,7 +34,7 @@ dotenv.config();
 		const {id} = req.params;
 
 		const note = await Anotacao.readOne(id);
-
+		console.log(note);
 		res.locals.mode = 'update';
 		res.render('anotacoes/form.html', {note});
 	}
