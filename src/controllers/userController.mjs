@@ -32,7 +32,7 @@ dotenv.config();
  	const {nome, usuario, senha} = req.body;
 		
 	try {
-		const encrypt = await bcrypt.hash(senha, Number(process.env.CRYPT));
+		const encrypt = await bcrypt.hash(senha, Number(process.env.BCRYPT_ROUNDS));
 
 		const novoUser = {nome, usuario, senha: encrypt};
 

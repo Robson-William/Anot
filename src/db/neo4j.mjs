@@ -6,8 +6,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 let driver = neo4j.driver(
-	process.env.NEO4JHOST,
-	neo4j.auth.basic(process.env.NEO4JUSER, process.env.NEO4JPASSWORD)
+	process.env.NEO4J_HOST,
+	neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD)
 )
 
 export {driver};

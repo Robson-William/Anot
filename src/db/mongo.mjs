@@ -6,7 +6,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // Conectar ao MongoDB
-const client = await mongoose.connect(process.env.MONGO + process.env.ANOT);
+const client = await mongoose.connect(process.env.MONGO_HOST + process.env.MONGODB_NAME);
 
 // Exportar módulo
 export {client};

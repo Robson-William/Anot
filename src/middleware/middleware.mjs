@@ -24,7 +24,7 @@ import {randomBytes} from 'node:crypto';
 			}
 		} else {
 			req.session.user = null;
-			return res.redirect('/')
+			return res.redirect('/login')
 		}
 	}
 
