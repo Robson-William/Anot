@@ -10,9 +10,13 @@ Para inicializar a API você deve:
 Arquivo .env (preencher com as informações do banco):
 ```
 PORT
-MONGO
-DBNAME
-DBCOLLECTION
+MONGO_HOST
+MONGODB_NAME
+NEO4J_HOST
+NEO4J_USER
+NEO4J_PASSWORD
+BCRYPT_ROUNDS
+SECRET
 ```
 
 3. ```npm i```
